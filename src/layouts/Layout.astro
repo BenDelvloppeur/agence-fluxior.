@@ -1,14 +1,15 @@
 ---
 import '../styles/globals.css';
-import '@fontsource/inter/300.css';
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/inter/700.css';
+// Optimisation performance: Charger uniquement les poids de fonts utilisés
+import '@fontsource/inter/400.css'; // font-normal
+import '@fontsource/inter/500.css'; // font-medium
+import '@fontsource/inter/600.css'; // font-semibold
+import '@fontsource/inter/700.css'; // font-bold
 import '@fontsource/space-grotesk/500.css';
 import '@fontsource/space-grotesk/600.css';
 import '@fontsource/space-grotesk/700.css';
 import { SITE_CONFIG } from '../lib/constants';
+import { env } from '../lib/env';
 import Noise from '../components/ui/Noise.astro';
 
 interface Props {
@@ -33,6 +34,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		
+		<!-- Performance: Preconnect pour Supabase (si configuré) -->
+		{env.supabase.url && env.supabase.url !== 'https://placeholder.supabase.co' && (
+			<>
+				<link rel="preconnect" href={env.supabase.url} crossorigin />
+				<link rel="dns-prefetch" href={env.supabase.url} />
+			</>
+		)}
 		
 		<!-- JSON-LD -->
 		<script type="application/ld+json">
