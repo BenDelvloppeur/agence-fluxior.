@@ -18,10 +18,10 @@ import Layout from '../../layouts/Layout.astro';
           <input type="password" name="password" class="w-full bg-surfaceHighlight/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-primary/50 focus:outline-none" required />
         </div>
 
-        <div id="error-message" class="text-red-500 text-sm hidden"></div>
+        <div id="error-message" class="text-red-500 text-sm hidden mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg"></div>
 
-        <button type="submit" class="w-full bg-primary text-white font-bold py-2 rounded-lg hover:bg-primary/90 transition-colors">
-          Se connecter
+        <button type="submit" id="login-button" class="w-full bg-primary text-white font-bold py-2 rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+          <span id="button-text">Se connecter</span>
         </button>
       </form>
     </div>
@@ -35,37 +35,86 @@ import Layout from '../../layouts/Layout.astro';
 
   const form = document.getElementById('login-form') as HTMLFormElement;
   const errorMsg = document.getElementById('error-message');
+  const loginButton = document.getElementById('login-button') as HTMLButtonElement;
+  const buttonText = document.getElementById('button-text');
 
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!errorMsg) return;
+  if (!form || !errorMsg || !loginButton || !buttonText) {
+    console.error('Login form elements not found');
+  } else {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Réinitialiser le message d'erreur
+      errorMsg.textContent = '';
+      errorMsg.classList.add('hidden');
+      
+      // Désactiver le bouton et afficher "Connexion..."
+      loginButton.disabled = true;
+      buttonText.textContent = 'Connexion...';
 
-    const formData = new FormData(form);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+      const formData = new FormData(form);
+      const email = formData.get('email') as string;
+      const password = formData.get('password') as string;
 
-    try {
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        logger.error(error, { context: 'authentication', email: email.replace(/(.{2}).*(@.*)/, '$1***$2') });
-        const errorInfo = handleError(error);
-        errorMsg.textContent = errorInfo.message;
+      if (!email || !password) {
+        errorMsg.textContent = 'Veuillez remplir tous les champs';
         errorMsg.classList.remove('hidden');
-      } else if (data.session) {
-        // La session est automatiquement gérée par @supabase/ssr
-        // Pas besoin de gérer les cookies manuellement
-        logger.info('User authenticated', { userId: data.user?.id });
-        window.location.href = '/admin';
+        loginButton.disabled = false;
+        buttonText.textContent = 'Se connecter';
+        return;
       }
-    } catch (err) {
-      logger.error(err);
-      const errorInfo = handleError(err);
-      errorMsg.textContent = errorInfo.message;
-      errorMsg.classList.remove('hidden');
-    }
-  });
+
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email: email.trim(),
+          password,
+        });
+
+        if (error) {
+          console.error('Login error:', error);
+          logger.error(error, { context: 'authentication', email: email.replace(/(.{2}).*(@.*)/, '$1***$2') });
+          
+          // Messages d'erreur plus explicites
+          let errorMessage = 'Erreur de connexion';
+          if (error.message.includes('Invalid login credentials')) {
+            errorMessage = 'Email ou mot de passe incorrect';
+          } else if (error.message.includes('Email not confirmed')) {
+            errorMessage = 'Votre email n\'est pas confirmé. Vérifiez votre boîte mail.';
+          } else if (error.message.includes('network') || error.message.includes('fetch')) {
+            errorMessage = 'Erreur de connexion au serveur. Vérifiez votre connexion internet.';
+          } else {
+            const errorInfo = handleError(error);
+            errorMessage = errorInfo.message;
+          }
+          
+          errorMsg.textContent = errorMessage;
+          errorMsg.classList.remove('hidden');
+          loginButton.disabled = false;
+          buttonText.textContent = 'Se connecter';
+        } else if (data.session) {
+          // La session est automatiquement gérée par @supabase/ssr
+          logger.info('User authenticated', { userId: data.user?.id });
+          buttonText.textContent = 'Redirection...';
+          
+          // Attendre un peu pour s'assurer que les cookies sont définis
+          setTimeout(() => {
+            window.location.href = '/admin';
+          }, 100);
+        } else {
+          errorMsg.textContent = 'Erreur: Aucune session créée';
+          errorMsg.classList.remove('hidden');
+          loginButton.disabled = false;
+          buttonText.textContent = 'Se connecter';
+        }
+      } catch (err) {
+        console.error('Unexpected error:', err);
+        logger.error(err);
+        const errorInfo = handleError(err);
+        errorMsg.textContent = errorInfo.message || 'Une erreur inattendue est survenue';
+        errorMsg.classList.remove('hidden');
+        loginButton.disabled = false;
+        buttonText.textContent = 'Se connecter';
+      }
+    });
+  }
 </script>
