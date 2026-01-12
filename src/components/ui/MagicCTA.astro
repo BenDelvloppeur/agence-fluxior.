@@ -1,0 +1,65 @@
+---
+import { ArrowRight, Calendar, Sparkles, MessageSquare } from "lucide-react";
+import { Reveal } from "./Motion";
+
+interface Props {
+  title: string;
+  subtitle: string;
+  badge?: string;
+}
+
+const { title, subtitle, badge = "Prêt à commencer ?" } = Astro.props;
+---
+
+<Reveal client:visible className="relative group">
+    <!-- 1. Animated Border Beam -->
+    <div class="absolute -inset-0.5 bg-gradient-to-r from-primary via-purple-500 to-secondary rounded-[32px] opacity-75 blur-sm group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+    
+    <!-- 2. Main Container -->
+    <div class="relative bg-background rounded-[30px] overflow-hidden border border-white/10">
+        
+        <!-- Background Grid Animation -->
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        
+        <!-- Ambient Glow -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[600px] bg-primary/20 blur-[100px] opacity-50 pointer-events-none"></div>
+
+        <!-- Content -->
+        <div class="relative z-10 px-8 py-16 md:p-20 flex flex-col items-center text-center">
+            
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-primary text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-md">
+                <Sparkles class="w-3 h-3" />
+                {badge}
+            </div>
+
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 text-white text-balance" set:html={title} />
+            
+            <p class="text-gray-400 text-xl max-w-2xl mx-auto mb-10 text-balance leading-relaxed">
+                {subtitle}
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                <a href="/start" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all duration-200 ease-out shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 will-change-transform group/btn">
+                    Démarrer un projet
+                    <ArrowRight class="w-5 h-5 group-hover/btn:translate-x-1 transition-transform duration-200" />
+                </a>
+                <a href="/contact" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/5 border border-white/10 text-white font-semibold rounded-xl hover:bg-white/10 hover:border-white/30 transition-all duration-200 ease-out backdrop-blur-sm">
+                    <MessageSquare class="w-5 h-5" />
+                    Nous contacter
+                </a>
+            </div>
+        </div>
+    </div>
+</Reveal>
+
+<style>
+    @keyframes tilt {
+        0%, 50%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(0.5deg); }
+        75% { transform: rotate(-0.5deg); }
+    }
+    .animate-tilt {
+        animation: tilt 10s infinite linear;
+    }
+</style>

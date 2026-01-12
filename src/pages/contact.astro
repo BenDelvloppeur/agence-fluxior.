@@ -1,0 +1,196 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/ui/Container.astro';
+import { Navbar } from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer.astro';
+import { Mail, Phone, MessageSquare, CheckCircle2, ArrowRight } from "lucide-react";
+import { Reveal } from "../components/ui/Motion";
+---
+
+<Layout title="Contact | Agence Fluxior">
+  <Navbar client:load />
+  
+  <main id="main-content" class="pt-32 pb-20 relative overflow-hidden">
+    <!-- Background Effects -->
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <Container>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+        
+        <!-- Info Side (5 columns) -->
+        <div class="lg:col-span-5 pt-4">
+          <Reveal client:load>
+              <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">
+                Parlons de votre <span class="text-gradient">projet.</span>
+              </h1>
+          </Reveal>
+          <Reveal client:load delay={0.2}>
+              <p class="text-gray-400 text-base leading-relaxed mb-8">
+                Vous avez une idée ? Un défi technique ? Ou simplement besoin d'un audit ?
+                Remplissez le formulaire, nous vous répondons sous 24h (promis).
+              </p>
+
+              <!-- Benefits List -->
+              <div class="space-y-3 mb-8">
+                <div class="flex items-center gap-3">
+                    <CheckCircle2 class="w-4 h-4 text-primary" />
+                    <span class="text-gray-300 text-sm">Audit initial offert (valeur 300€)</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <CheckCircle2 class="w-4 h-4 text-primary" />
+                    <span class="text-gray-300 text-sm">Réponse garantie sous 24h ouvrées</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <CheckCircle2 class="w-4 h-4 text-primary" />
+                    <span class="text-gray-300 text-sm">Devis détaillé et transparent</span>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <a href="mailto:bonjour@agence-fluxior.fr" class="flex items-center gap-3 group p-3 rounded-xl bg-surface/30 border border-white/5 hover:border-primary/30 transition-all duration-300">
+                  <div class="w-8 h-8 rounded-full bg-surfaceHighlight flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                    <Mail class="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-white text-xs mb-0.5">Email</h3>
+                    <span class="text-gray-400 text-xs group-hover:text-white transition-colors">bonjour@agence-fluxior.fr</span>
+                  </div>
+                </a>
+                
+                <a href="tel:+33100000000" class="flex items-center gap-3 group p-3 rounded-xl bg-surface/30 border border-white/5 hover:border-primary/30 transition-all duration-300">
+                  <div class="w-8 h-8 rounded-full bg-surfaceHighlight flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white transition-all duration-300">
+                    <Phone class="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-white text-xs mb-0.5">Téléphone</h3>
+                    <span class="text-gray-400 text-xs group-hover:text-white transition-colors">01 00 00 00 00</span>
+                  </div>
+                </a>
+
+                <a href="#" class="flex items-center gap-3 group p-3 rounded-xl bg-surface/30 border border-white/5 hover:border-emerald-500/30 transition-all duration-300">
+                  <div class="w-8 h-8 rounded-full bg-surfaceHighlight flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
+                    <MessageSquare class="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-white text-xs mb-0.5">WhatsApp</h3>
+                    <span class="text-gray-400 text-xs group-hover:text-white transition-colors">Discuter en direct</span>
+                  </div>
+                </a>
+              </div>
+          </Reveal>
+        </div>
+
+        <!-- Form Side (7 columns) -->
+        <Reveal client:load delay={0.4} className="lg:col-span-7">
+            <div class="relative">
+                <!-- Decorative Border -->
+                <div class="absolute -inset-[1px] bg-gradient-to-r from-primary via-secondary to-pink-500 rounded-3xl opacity-30 blur-sm"></div>
+                
+                <div class="bg-[#0A0F1E] rounded-3xl p-8 md:p-10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
+                    
+                <form class="space-y-6 relative z-10" id="contact-form">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label for="firstname" class="text-xs font-medium text-gray-300 ml-1">Prénom</label>
+                            <input type="text" id="firstname" name="firstname" class="w-full bg-surfaceHighlight/30 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all hover:border-white/20" placeholder="John" required />
+                        </div>
+                        <div class="space-y-1.5">
+                            <label for="lastname" class="text-xs font-medium text-gray-300 ml-1">Nom</label>
+                            <input type="text" id="lastname" name="lastname" class="w-full bg-surfaceHighlight/30 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all hover:border-white/20" placeholder="Doe" required />
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label for="email" class="text-xs font-medium text-gray-300 ml-1">Email professionnel</label>
+                        <input type="email" id="email" name="email" class="w-full bg-surfaceHighlight/30 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all hover:border-white/20" placeholder="john@entreprise.com" required />
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label for="project" class="text-xs font-medium text-gray-300 ml-1">Type de projet</label>
+                            <div class="relative">
+                                <select id="project" name="project" class="w-full bg-surfaceHighlight/30 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all appearance-none cursor-pointer hover:border-white/20">
+                                    <option>Site Vitrine</option>
+                                    <option>E-commerce</option>
+                                    <option>Application Sur-Mesure</option>
+                                    <option>Audit & Performance</option>
+                                    <option>Autre demande</option>
+                                </select>
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label for="budget" class="text-xs font-medium text-gray-300 ml-1">Budget estimé</label>
+                            <div class="relative">
+                                <select id="budget" name="budget" class="w-full bg-surfaceHighlight/30 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all appearance-none cursor-pointer hover:border-white/20">
+                                    <option>700€ - 1200€</option>
+                                    <option>1200€ - 2000€</option>
+                                    <option>+ 2000€</option>
+                                </select>
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label for="message" class="text-xs font-medium text-gray-300 ml-1">Détails du projet</label>
+                        <textarea id="message" name="message" rows="4" class="w-full bg-surfaceHighlight/30 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all resize-none hover:border-white/20" placeholder="Parlez-nous de vos objectifs, de votre cible, de vos délais..." required></textarea>
+                    </div>
+
+                    <div class="flex items-start gap-3 pt-1">
+                        <input type="checkbox" id="consent" required class="mt-0.5 w-3.5 h-3.5 rounded border-white/10 bg-surfaceHighlight/30 text-primary focus:ring-primary/50 cursor-pointer" />
+                        <label for="consent" class="text-[10px] text-gray-500 leading-relaxed cursor-pointer select-none">
+                            En soumettant ce formulaire, j'accepte que mes informations soient utilisées pour me recontacter.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="w-full bg-white text-black hover:bg-gray-200 font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2 group text-base mt-2">
+                        Envoyer ma demande <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                    </form>
+
+                    <script>
+                        import { supabase } from '../lib/supabase';
+
+                        const form = document.getElementById('contact-form') as HTMLFormElement;
+                        form?.addEventListener('submit', async (e) => {
+                            e.preventDefault();
+                            const formData = new FormData(form);
+                            
+                            const data = {
+                                name: `${formData.get('firstname')} ${formData.get('lastname')}`,
+                                email: formData.get('email') as string,
+                                project_type: formData.get('project') as string,
+                                budget: formData.get('budget') as string,
+                                message: formData.get('message') as string,
+                                source: 'contact_form',
+                                status: 'new'
+                            };
+
+                            try {
+                                const { error } = await supabase.from('leads').insert([data]);
+                                if (error) throw error;
+                                window.location.href = '/merci';
+                            } catch (error) {
+                                alert("Une erreur est survenue. Veuillez réessayer.");
+                                console.error(error);
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </Reveal>
+
+      </div>
+    </Container>
+  </main>
+
+  <Footer />
+</Layout>

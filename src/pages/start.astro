@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/ui/Container.astro';
+import { Navbar } from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer.astro';
+import { ProjectWizard as Wizard } from '../components/ui/ProjectWizard';
+import { CheckCircle2, Zap, Rocket } from "lucide-react";
+import { Reveal } from "../components/ui/Motion";
+---
+
+<Layout title="Démarrer votre projet | Agence Fluxior">
+  <Navbar client:load />
+  
+  <main class="pt-32 pb-20 min-h-screen relative overflow-hidden flex items-center">
+    <!-- Background Effects -->
+    <div class="absolute inset-0 z-[-1]">
+        <div class="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-primary/10 rounded-full blur-[150px] opacity-50 pointer-events-none animate-blob"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-[800px] h-[800px] bg-secondary/10 rounded-full blur-[150px] opacity-50 pointer-events-none animate-blob animation-delay-2000"></div>
+    </div>
+
+    <Container>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        
+        <!-- Info Side (4 columns) - Centré verticalement -->
+        <div class="lg:col-span-4">
+          <Reveal client:load>
+              <h1 class="text-4xl md:text-5xl font-display font-bold mb-6 leading-tight">
+                Configurons votre <span class="text-gradient">Succès.</span>
+              </h1>
+          </Reveal>
+          <Reveal client:load delay={0.2}>
+              <p class="text-gray-400 text-base leading-relaxed mb-8">
+                Répondez à ces quelques questions pour nous permettre de comprendre votre vision.
+                Nous préparerons une première maquette ou une recommandation stratégique avant même notre premier appel.
+              </p>
+
+              <!-- Benefits List -->
+              <div class="space-y-6 mb-8">
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                        <Zap class="w-5 h-5" />
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-sm mb-1">Analyse Rapide</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">Identification immédiate de vos besoins clés et contraintes techniques.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
+                        <Rocket class="w-5 h-5" />
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-sm mb-1">Stratégie sur-mesure</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">Une approche adaptée à votre marché et à vos objectifs de croissance.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0">
+                        <CheckCircle2 class="w-5 h-5" />
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-sm mb-1">Devis Transparent</h3>
+                        <p class="text-gray-400 text-xs leading-relaxed">Aucun coût caché, tout est clair dès le départ.</p>
+                    </div>
+                </div>
+              </div>
+          </Reveal>
+        </div>
+
+        <!-- Wizard Side (8 columns) -->
+        <div class="lg:col-span-8 w-full">
+            <Reveal client:load delay={0.4} width="100%">
+                <Wizard client:load />
+            </Reveal>
+        </div>
+
+      </div>
+    </Container>
+  </main>
+
+  <Footer />
+</Layout>

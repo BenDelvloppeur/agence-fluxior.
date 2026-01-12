@@ -1,0 +1,45 @@
+---
+import { ArrowLeft } from "lucide-react";
+import '../styles/globals.css';
+
+interface Props {
+  title: string;
+  themeColor: string;
+}
+
+const { title, themeColor } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | Démo Fluxior</title>
+    <!-- Google Fonts spécifiques pour les démos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&family=Oswald:wght@400;500;700&family=DM+Sans:wght@400;500;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-white">
+    <!-- Fluxior Navigation Bar (Always visible) -->
+    <div class="fixed top-0 left-0 right-0 z-[100] h-14 bg-[#030712] border-b border-white/10 flex items-center justify-between px-6">
+      <a href="/#portfolio" class="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition-colors group">
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+        Retour à l'agence
+      </a>
+      <div class="text-white text-sm font-bold tracking-wider">
+        DÉMO <span style={`color: ${themeColor}`}>{title.toUpperCase()}</span>
+      </div>
+      <a href="/contact" class="px-4 py-1.5 rounded-full bg-white/10 text-xs font-medium text-white hover:bg-white hover:text-black transition-all">
+        Commander ce site
+      </a>
+    </div>
+
+    <!-- Demo Content -->
+    <div class="pt-14 min-h-screen">
+      <slot />
+    </div>
+  </body>
+</html>

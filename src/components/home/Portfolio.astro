@@ -1,0 +1,68 @@
+---
+import Container from "../ui/Container.astro";
+import { ArrowRight } from "lucide-react";
+import { Reveal } from "../ui/Motion";
+import { PortfolioSwipeable } from "./PortfolioSwipeable";
+import { PortfolioDesktop } from "./PortfolioDesktop";
+
+const demos = [
+  {
+    title: "Maison Tradition",
+    category: "Boucherie Artisanale",
+    description: "Site vitrine premium pour artisans de bouche. Click & Collect et mise en avant du terroir.",
+    image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80",
+    link: "/projets/maison-tradition",
+    tags: ["Food", "Artisan", "Local"]
+  },
+  {
+    title: "Kaly Mode",
+    category: "Mode & E-commerce",
+    description: "Boutique en ligne féminine et dynamique avec lookbook intégré.",
+    image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?ixlib=rb-1.2.1&auto=format&fit=crop&w=2100&q=80",
+    link: "/projets/kaly-mode",
+    tags: ["Fashion", "Lifestyle"]
+  }
+];
+---
+
+<section id="portfolio" class="py-32 relative overflow-hidden bg-background">
+  <!-- Background Noise/Gradient -->
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background opacity-50"></div>
+
+  <Container className="relative z-10">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+      <div class="max-w-2xl">
+        <Reveal client:visible>
+            <span class="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Notre Showroom</span>
+            <h2 class="text-4xl md:text-6xl font-display font-bold mb-6">
+            Démos <span class="text-gradient">Interactives</span>
+            </h2>
+        </Reveal>
+        <Reveal client:visible delay={0.2}>
+            <p class="text-gray-400 text-lg leading-relaxed">
+            Ne nous croyez pas sur parole. Explorez nos sites de démonstration complets, 
+            conçus pour différents secteurs d'activité. Cliquez et naviguez comme un vrai client.
+            </p>
+        </Reveal>
+      </div>
+    </div>
+
+    <!-- Desktop: StaggerContainer avec animations -->
+    <div class="hidden md:block">
+      <PortfolioDesktop client:load demos={demos} />
+    </div>
+
+    <!-- Mobile: Swipeable Cards -->
+    <div class="md:hidden">
+      <PortfolioSwipeable client:load demos={demos} />
+    </div>
+
+    <div class="mt-16 text-center">
+      <a href="/realisations" class="inline-flex items-center gap-2 px-8 py-3 bg-surfaceHighlight border border-white/10 rounded-full text-white font-medium hover:bg-white hover:text-black transition-all duration-300 group hover:scale-105 active:scale-95">
+        Voir tout le portfolio
+        <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      </a>
+    </div>
+    
+  </Container>
+</section>

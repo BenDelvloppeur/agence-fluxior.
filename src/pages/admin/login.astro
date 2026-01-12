@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Admin Login | Agence Fluxior">
+  <main class="min-h-screen flex items-center justify-center bg-background">
+    <div class="w-full max-w-md p-8 rounded-2xl bg-surface/30 border border-white/10 backdrop-blur-md">
+      <h1 class="text-2xl font-bold text-white mb-6 text-center">Accès Admin</h1>
+      
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+          <input type="email" name="email" class="w-full bg-surfaceHighlight/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-primary/50 focus:outline-none" required />
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-400 mb-1">Mot de passe</label>
+          <input type="password" name="password" class="w-full bg-surfaceHighlight/50 border border-white/10 rounded-lg px-4 py-2 text-white focus:border-primary/50 focus:outline-none" required />
+        </div>
+
+        <div id="error-message" class="text-red-500 text-sm hidden"></div>
+
+        <button type="submit" class="w-full bg-primary text-white font-bold py-2 rounded-lg hover:bg-primary/90 transition-colors">
+          Se connecter
+        </button>
+      </form>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { supabaseClient } from '../../lib/supabase-client';
+  import { logger } from '../../lib/logger';
+  import { handleError } from '../../lib/errors';
+
+  const form = document.getElementById('login-form') as HTMLFormElement;
+  const errorMsg = document.getElementById('error-message');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!errorMsg) return;
+
+    const formData = new FormData(form);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    try {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        logger.error(error, { context: 'authentication', email: email.replace(/(.{2}).*(@.*)/, '$1***$2') });
+        const errorInfo = handleError(error);
+        errorMsg.textContent = errorInfo.message;
+        errorMsg.classList.remove('hidden');
+      } else if (data.session) {
+        // La session est automatiquement gérée par @supabase/ssr
+        // Pas besoin de gérer les cookies manuellement
+        logger.info('User authenticated', { userId: data.user?.id });
+        window.location.href = '/admin';
+      }
+    } catch (err) {
+      logger.error(err);
+      const errorInfo = handleError(err);
+      errorMsg.textContent = errorInfo.message;
+      errorMsg.classList.remove('hidden');
+    }
+  });
+</script>

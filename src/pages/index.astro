@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Navbar } from '../components/layout/Navbar';
+import Hero from '../components/home/Hero.astro';
+import Services from '../components/home/Services.astro';
+import Process from '../components/home/Process.astro';
+import Portfolio from '../components/home/Portfolio.astro';
+import Contact from '../components/home/Contact.astro';
+import Footer from '../components/layout/Footer.astro';
+---
+
+<Layout title="Agence Fluxior | Création de Sites Web Premium & Performance">
+	<Navbar client:load />
+	
+	<main id="main-content">
+		<Hero />
+		<Services />
+		<Portfolio />
+		<Process />
+		<Contact />
+	</main>
+	
+	<Footer />
+</Layout>

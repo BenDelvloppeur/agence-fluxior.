@@ -1,0 +1,40 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+import { AdminDashboard } from '../../components/admin/AdminDashboard';
+import { isAuthenticated } from '../../lib/supabase-server';
+
+// Protection de la route (Côté serveur)
+const { cookies, redirect } = Astro;
+
+// Vérifier l'authentification côté serveur
+const authenticated = await isAuthenticated(cookies);
+
+if (!authenticated) {
+  return redirect("/admin/login");
+}
+---
+
+<Layout title="Dashboard Admin | Agence Fluxior">
+  <main class="h-screen w-full overflow-hidden">
+    <AdminDashboard client:only="react" />
+  </main>
+</Layout>
+
+<script>
+  import { supabase } from '../../lib/supabase';
+
+  // Vérification de session au chargement (sécurité supplémentaire côté client)
+  // La vérification principale est déjà faite côté serveur
+  (async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        window.location.href = '/admin/login';
+      }
+    } catch (error) {
+      console.error('Error checking session:', error);
+      window.location.href = '/admin/login';
+    }
+  })();
+</script>

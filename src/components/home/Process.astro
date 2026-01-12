@@ -1,0 +1,57 @@
+---
+import Container from "../ui/Container.astro";
+import { Search, PenTool, Rocket } from "lucide-react";
+---
+
+<section id="process" class="py-24 bg-surfaceHighlight/20 border-y border-white/5">
+  <Container>
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl md:text-5xl font-display font-bold mb-6">Comment nous <span class="text-gradient">travaillons</span></h2>
+      <p class="text-gray-400 text-lg">
+        Un processus simple et transparent en 3 étapes pour donner vie à votre projet.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+      <!-- Connector Line (Desktop) -->
+      <div class="hidden md:block absolute top-12 left-[16%] right-[16%] h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent border-t border-dashed border-white/20"></div>
+
+      <!-- Step 1 -->
+      <div class="relative flex flex-col items-center text-center">
+        <div class="w-24 h-24 rounded-full bg-surface border border-white/10 flex items-center justify-center relative z-10 mb-6 group hover:border-primary/50 transition-colors shadow-[0_0_30px_-10px_rgba(99,102,241,0.3)]">
+          <Search class="w-10 h-10 text-primary" />
+          <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-surfaceHighlight border border-white/10 flex items-center justify-center font-bold text-white">1</div>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Audit & Stratégie</h3>
+        <p class="text-gray-400 text-sm">
+          Nous analysons vos besoins, votre marché et vos concurrents pour définir la meilleure stratégie digitale.
+        </p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="relative flex flex-col items-center text-center">
+        <div class="w-24 h-24 rounded-full bg-surface border border-white/10 flex items-center justify-center relative z-10 mb-6 group hover:border-secondary/50 transition-colors shadow-[0_0_30px_-10px_rgba(168,85,247,0.3)]">
+          <PenTool class="w-10 h-10 text-secondary" />
+          <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-surfaceHighlight border border-white/10 flex items-center justify-center font-bold text-white">2</div>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Design & Développement</h3>
+        <p class="text-gray-400 text-sm">
+          Création de démo, validation, puis développement de votre site avec les dernières technologies.
+        </p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="relative flex flex-col items-center text-center">
+        <div class="w-24 h-24 rounded-full bg-surface border border-white/10 flex items-center justify-center relative z-10 mb-6 group hover:border-pink-500/50 transition-colors shadow-[0_0_30px_-10px_rgba(236,72,153,0.3)]">
+          <Rocket class="w-10 h-10 text-pink-500" />
+          <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-surfaceHighlight border border-white/10 flex items-center justify-center font-bold text-white">3</div>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">Lancement & Suivi</h3>
+        <p class="text-gray-400 text-sm">
+          Mise en ligne, formation à l'administration et suivi des performances pour assurer votre succès.
+        </p>
+      </div>
+
+    </div>
+  </Container>
+</section>

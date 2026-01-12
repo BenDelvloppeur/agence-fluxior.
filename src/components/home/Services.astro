@@ -1,0 +1,50 @@
+---
+import Container from "../ui/Container.astro";
+import { Zap, ArrowRight } from "lucide-react";
+import { Reveal } from "../ui/Motion";
+import { ServicesSwipeable } from "./ServicesSwipeable";
+import { ServicesDesktop } from "./ServicesDesktop";
+---
+
+<section id="services" class="py-32 bg-surface/30 relative overflow-hidden">
+  <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)"></div>
+  
+  <Container className="relative z-10">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+      <div class="max-w-2xl">
+        <Reveal client:visible>
+          <h2 class="text-4xl md:text-6xl font-display font-bold mb-6">Expertise <span class="text-gradient">360°</span></h2>
+        </Reveal>
+        <Reveal client:visible delay={0.2}>
+          <p class="text-gray-400 text-lg leading-relaxed">
+            Une approche holistique du web moderne. De la conception à la performance, 
+            nous maîtrisons chaque brique de votre écosystème digital.
+          </p>
+        </Reveal>
+      </div>
+      <Reveal client:visible delay={0.4}>
+        <a href="/contact" class="hidden md:flex items-center gap-2 text-white border-b border-primary/50 pb-1 hover:text-primary transition-colors">
+            Obtenir un audit gratuit <Zap class="w-4 h-4" />
+        </a>
+      </Reveal>
+    </div>
+
+    <!-- Desktop: StaggerContainer avec animations -->
+    <div class="hidden md:block">
+      <ServicesDesktop client:load />
+    </div>
+
+    <!-- Mobile: Swipeable Cards -->
+    <div class="md:hidden">
+      <ServicesSwipeable client:load />
+    </div>
+
+    <div class="mt-16 text-center">
+      <a href="/services" class="inline-flex items-center gap-2 px-8 py-3 bg-surfaceHighlight border border-white/10 rounded-full text-white font-medium hover:bg-white hover:text-black transition-all duration-300 group">
+        Découvrir nos services en détail
+        <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      </a>
+    </div>
+
+  </Container>
+</section>

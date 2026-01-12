@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/ui/Container.astro';
+import { Navbar } from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer.astro';
+import { CheckCircle2, ArrowRight } from "lucide-react";
+import { Reveal } from "../components/ui/Motion";
+---
+
+<Layout title="Merci ! | Agence Fluxior">
+  <Navbar client:load />
+  
+  <main class="min-h-screen flex flex-col justify-center relative overflow-hidden pt-20">
+    <!-- Background Effects -->
+    <div class="absolute inset-0 z-[-1]">
+        <div class="absolute top-[20%] right-[20%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] opacity-50 pointer-events-none animate-blob"></div>
+    </div>
+
+    <Container>
+      <div class="max-w-2xl mx-auto text-center flex flex-col items-center">
+        <Reveal client:load>
+            <div class="w-24 h-24 bg-surfaceHighlight/50 rounded-full flex items-center justify-center mx-auto mb-8 text-emerald-500 border border-emerald-500/20 shadow-[0_0_30px_-10px_rgba(16,185,129,0.3)]">
+                <CheckCircle2 class="w-12 h-12" />
+            </div>
+            <h1 class="text-4xl md:text-6xl font-display font-bold mb-6">
+              Message <span class="text-gradient">Reçu !</span>
+            </h1>
+        </Reveal>
+        <Reveal client:load delay={0.2}>
+            <p class="text-gray-400 text-xl leading-relaxed mb-12">
+              Merci de nous avoir confié votre projet. Notre équipe analyse votre demande 
+              et reviendra vers vous sous 24h avec une proposition concrète.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="/" class="px-8 py-3 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-all flex items-center gap-2 group">
+                    Retour à l'accueil <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a href="/realisations" class="px-8 py-3 bg-surface/30 border border-white/10 text-white font-medium rounded-lg hover:bg-surface/50 transition-all">
+                    Voir nos réalisations
+                </a>
+            </div>
+        </Reveal>
+      </div>
+    </Container>
+  </main>
+
+  <Footer />
+</Layout>
